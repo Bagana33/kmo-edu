@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Phone, MapPin, Mail } from "lucide-react"
 
 export function Footer() {
@@ -9,9 +10,13 @@ export function Footer() {
           {/* Brand - Full width on mobile */}
           <div className="col-span-2 md:col-span-1 space-y-4">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm sm:text-base">
-                KMO
-              </div>
+              <Image
+                src="/logo.jpg"
+                alt="KMO Education Center"
+                width={40}
+                height={40}
+                className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
+              />
               <div>
                 <div className="text-xs sm:text-sm font-semibold">KMO EDUCATION CENTER</div>
                 <div className="text-[10px] sm:text-xs text-muted-foreground">Боловсрол зууч, Сургалтын төв</div>

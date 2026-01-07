@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState } from "react"
 import { Menu, X, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -22,9 +23,14 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-3 sm:px-4">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm sm:text-base">
-            KMO
-          </div>
+          <Image
+            src="/logo.jpg"
+            alt="KMO Education Center"
+            width={40}
+            height={40}
+            className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
+            priority
+          />
           <div className="hidden xs:block sm:block">
             <div className="text-xs sm:text-sm font-semibold text-foreground">KMO EDUCATION</div>
             <div className="text-[10px] sm:text-xs text-muted-foreground">Боловсрол зууч</div>
