@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { JetBrains_Mono, Manrope } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Toaster } from "@/components/ui/sonner"
+import { MessengerChat } from "@/components/messenger-chat"
 import "./globals.css"
 
 const sans = Manrope({
@@ -54,6 +55,7 @@ export default function RootLayout({
     <html lang="mn" className={`${sans.variable} ${mono.variable}`}>
       <body className={`font-sans antialiased`}>
         {children}
+        <MessengerChat />
         <Toaster />
         <Analytics />
       </body>

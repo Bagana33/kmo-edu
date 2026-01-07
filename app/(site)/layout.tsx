@@ -1,7 +1,6 @@
 import type React from "react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { MessengerChat } from "@/components/messenger-chat"
 
 export default function SiteLayout({
   children,
@@ -13,7 +12,6 @@ export default function SiteLayout({
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
-      <MessengerChat />
     </div>
   )
 }
