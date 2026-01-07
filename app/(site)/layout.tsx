@@ -13,16 +13,7 @@ export default function SiteLayout({
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
-      {process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID && (
-        <MessengerChat
-          pageId={process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID}
-          appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
-          loggedInGreeting="Сайн байна уу! Танай асуултанд хариулахдаа баяртай байна."
-          loggedOutGreeting="Сайн байна уу! KMO Education Center-тэй холбогдохыг хүсвэл бидэнтэй чатаар холбогдоорой."
-          greetingDialogDisplay="show"
-          greetingDialogDelay={3}
-        />
-      )}
+      <MessengerChat />
     </div>
   )
 }
