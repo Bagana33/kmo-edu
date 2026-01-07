@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { MessageCircle, X, Send, Minimize2 } from 'lucide-react'
+import { MessageCircle, X, Send, Minimize2, Circle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
@@ -99,10 +99,14 @@ export function MessengerChat() {
             setIsOpen(true)
             setIsMinimized(false)
           }}
-          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#0084ff] text-white shadow-lg transition-all hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0084ff] focus:ring-offset-2"
-          aria-label="Open chat"
+          className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#0084ff] to-[#0066cc] text-white shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-[0_10px_40px_rgba(0,132,255,0.4)] focus:outline-none focus:ring-4 focus:ring-[#0084ff]/50 focus:ring-offset-2 animate-in fade-in zoom-in duration-300"
+          aria-label="Чат нээх"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-7 w-7" />
+          <span className="absolute -top-1 -right-1 flex h-4 w-4">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex h-4 w-4 rounded-full bg-green-500"></span>
+          </span>
         </button>
       )}
 
@@ -110,38 +114,45 @@ export function MessengerChat() {
       {isOpen && (
         <div
           className={cn(
-            'fixed bottom-6 right-6 z-50 flex flex-col rounded-lg bg-white shadow-2xl transition-all duration-300',
+            'fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-2xl bg-white shadow-2xl transition-all duration-300 animate-in slide-in-from-bottom-4 fade-in zoom-in',
             isMinimized
-              ? 'h-14 w-80'
+              ? 'h-16 w-80'
               : 'h-[500px] w-80 sm:h-[600px] sm:w-96'
           )}
           style={{
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05)',
           }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between bg-[#0084ff] px-4 py-3 text-white">
+          <div className="flex items-center justify-between bg-gradient-to-r from-[#0084ff] to-[#0066cc] px-5 py-4 text-white shadow-md">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-                <MessageCircle className="h-5 w-5" />
+              <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm ring-2 ring-white/30">
+                <MessageCircle className="h-6 w-6" />
+                <span className="absolute bottom-0 right-0 flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75"></span>
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-green-400"></span>
+                </span>
               </div>
               <div>
-                <div className="font-semibold">KMO Education Center</div>
-                <div className="text-xs opacity-90">Онлайн</div>
+                <div className="font-semibold text-base">KMO Education Center</div>
+                <div className="flex items-center gap-1.5 text-xs opacity-95">
+                  <Circle className="h-2 w-2 fill-current" />
+                  <span>Онлайн</span>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setIsMinimized(!isMinimized)}
-                className="rounded p-1.5 transition-colors hover:bg-white/20"
-                aria-label={isMinimized ? 'Maximize' : 'Minimize'}
+                className="rounded-lg p-2 transition-all hover:bg-white/20 hover:scale-110 active:scale-95"
+                aria-label={isMinimized ? 'Дэлгэх' : 'Багасгах'}
               >
                 <Minimize2 className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded p-1.5 transition-colors hover:bg-white/20"
-                aria-label="Close chat"
+                className="rounded-lg p-2 transition-all hover:bg-white/20 hover:scale-110 active:scale-95"
+                aria-label="Хаах"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -151,53 +162,58 @@ export function MessengerChat() {
           {/* Messages */}
           {!isMinimized && (
             <>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={cn(
-                      'flex',
-                      message.sender === 'user' ? 'justify-end' : 'justify-start'
-                    )}
-                  >
+              <div className="flex-1 overflow-y-auto bg-gradient-to-b from-gray-50 to-white p-4">
+                <div className="space-y-4">
+                  {messages.map((message, index) => (
                     <div
+                      key={message.id}
                       className={cn(
-                        'max-w-[80%] rounded-lg px-4 py-2',
-                        message.sender === 'user'
-                          ? 'bg-[#0084ff] text-white'
-                          : 'bg-white text-gray-800 shadow-sm'
+                        'flex animate-in fade-in slide-in-from-bottom-2 duration-300',
+                        message.sender === 'user' ? 'justify-end' : 'justify-start',
+                        index === messages.length - 1 && 'delay-100'
                       )}
                     >
-                      <p className="text-sm">{message.text}</p>
-                      <p
+                      <div
                         className={cn(
-                          'mt-1 text-xs',
+                          'group max-w-[85%] rounded-2xl px-4 py-2.5 shadow-sm transition-all hover:shadow-md',
                           message.sender === 'user'
-                            ? 'text-white/70'
-                            : 'text-gray-500'
+                            ? 'bg-gradient-to-br from-[#0084ff] to-[#0066cc] text-white rounded-br-md'
+                            : 'bg-white text-gray-800 border border-gray-100 rounded-bl-md'
                         )}
                       >
-                        {formatTime(message.timestamp)}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="rounded-lg bg-white px-4 py-2 shadow-sm">
-                      <div className="flex gap-1">
-                        <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]"></div>
-                        <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]"></div>
-                        <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400"></div>
+                        <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                          {message.text}
+                        </p>
+                        <p
+                          className={cn(
+                            'mt-1.5 text-xs',
+                            message.sender === 'user'
+                              ? 'text-white/80'
+                              : 'text-gray-500'
+                          )}
+                        >
+                          {formatTime(message.timestamp)}
+                        </p>
                       </div>
                     </div>
-                  </div>
-                )}
+                  ))}
+                  {isTyping && (
+                    <div className="flex justify-start animate-in fade-in slide-in-from-bottom-2">
+                      <div className="rounded-2xl rounded-bl-md bg-white border border-gray-100 px-4 py-3 shadow-sm">
+                        <div className="flex gap-1.5 items-center">
+                          <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]"></div>
+                          <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]"></div>
+                          <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400"></div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div ref={messagesEndRef} />
               </div>
 
               {/* Input */}
-              <div className="border-t bg-white p-3">
+              <div className="border-t border-gray-200 bg-white p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
                 <div className="flex gap-2">
                   <Input
                     ref={inputRef}
@@ -205,12 +221,12 @@ export function MessengerChat() {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Зурвас илгээх..."
-                    className="flex-1"
+                    className="flex-1 border-gray-200 focus:border-[#0084ff] focus:ring-[#0084ff]/20"
                   />
                   <Button
                     onClick={handleSend}
                     disabled={!inputValue.trim()}
-                    className="bg-[#0084ff] hover:bg-[#0066cc]"
+                    className="bg-gradient-to-br from-[#0084ff] to-[#0066cc] hover:from-[#0066cc] hover:to-[#0052a3] disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all duration-200"
                     size="icon"
                   >
                     <Send className="h-4 w-4" />
